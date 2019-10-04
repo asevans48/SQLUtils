@@ -4,6 +4,8 @@ An index
 @author Andrew Evans
 """
 
+from sql.query import index_query_generator
+
 
 class Index:
     """
@@ -11,12 +13,13 @@ class Index:
     """
 
     def __init__(
-            self, name, table, columns, using=None, unique=False, concurrent=False, use_with=None, tablespace=None, condition=None):
+            self, name, table, columns, schema=None, using=None, unique=False, concurrent=False, use_with=None, tablespace=None, condition=None):
         """
         Constructor
         """
         self.__name = name
         self.__table = table
+        self.__schema = schema
         self.__unique = unique
         self.__concurrent = concurrent
         self.__columns = columns
@@ -24,6 +27,41 @@ class Index:
         self.__use_with = use_with
         self.__tablespace = tablespace
         self.__condition = condition
+
+    @property
+    def table(self):
+        """
+        Get the table name property
+
+        :return:    The table name
+        """
+        return self.__table
+
+    @table.setter
+    def table(self, intable):
+        """
+        Set the table name
+
+        :param intable: The table name
+        """
+        self.__table = intable
+
+    @property
+    def schema(self):
+        """
+        Get the name of the schema
+
+        :return:    The schema name
+        """
+        return self.__schema
+
+    @schema.setter
+    def schema(self, inschema):
+        """
+        Set the schema name
+        :param inschema:    The schema
+        """
+        self.__schema = inschema
 
     @property
     def condition(self):
@@ -171,3 +209,10 @@ class Index:
         :param inname:  The index name
         """
         self.__name = inname
+
+    def __str__(self):
+        """
+        Convert the index to a create query
+        :return:    A create query
+        """
+        return index_query_generator.generate_index_query(self)

@@ -4,6 +4,8 @@ Generate indices
 @author Andrew Evans
 """
 
+from sql.query import index_query_generator
+
 
 class IndexGenerator:
     """
@@ -51,6 +53,6 @@ class IndexGenerator:
         """
         if indices:
             for index in indices:
-                pass
-
-
+                q = index_query_generator.generate_index_query(index)
+                with self.__conn.cursor() as cursor:
+                    cursor.execute(q)

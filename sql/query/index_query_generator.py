@@ -4,6 +4,7 @@ Query generator for indices
 @author Andrew Evans
 """
 
+
 def generate_index_query(index):
     """
     Generate a query from a given index
@@ -17,10 +18,13 @@ def generate_index_query(index):
     q = "{} INDEX".format(q)
     if index.concurrent:
         q = "{} CONCURRENTLY".format(q)
-    q = "{} {} ON {}".format(q, index.name, index.table)
+    if index.schema:
+        q = "{} {} ON {}.{}".format(q, index.name, index.schema, index.table)
+    else:
+        q = "{} {} ON {}".format(q, index.name, index.table)
     if index.using:
         q = "{} USING {}".format(q, index.using)
-    fields = ','.format(index.columns)
+    fields = ','.join(index.columns)
     q = "{}({})".format(q, fields)
     if index.use_with:
         with_list = ','.join(index.use_with)
