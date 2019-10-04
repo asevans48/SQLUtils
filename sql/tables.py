@@ -26,7 +26,7 @@ class Table:
         """
         return self.__schema
 
-    @property.setter
+    @schema.setter
     def schema(self, schema):
         """
         Set the schema name
@@ -44,7 +44,7 @@ class Table:
         """
         return self.__table
 
-    @property.setter
+    @table.setter
     def table(self, table):
         """
         Set the table name
@@ -62,7 +62,7 @@ class Table:
         """
         return self.__fields
 
-    @property.setter
+    @fields.setter
     def fields(self, fields):
         """
         Set the fields

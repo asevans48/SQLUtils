@@ -4,7 +4,7 @@ A table generator
 @author Andrew Evans
 """
 
-import psycopg2
+from sql import query_generator
 
 
 class TableGenerator:
@@ -16,6 +16,14 @@ class TableGenerator:
         :param conn:    The connection
         """
         self.__conn = conn
+
+    def close_cursor(self):
+        """
+        Close the cursor
+        """
+        if self.__conn is not None:
+            self.__conn.close
+            self.__conn = None
 
     def __enter__(self):
         """
@@ -32,9 +40,7 @@ class TableGenerator:
         :param exc_val:
         :param exc_tb:
         """
-        if self.__conn is not None:
-            self.__conn.close
-            self.__conn = None
+        self.close_cursor()
 
     def create_table(self, table_object):
         """
@@ -42,6 +48,6 @@ class TableGenerator:
 
         :param table_object: Object containing table information
         """
-        schema = table_object.schema
-        table = table_object.table
-        fields = table_object.fields
+        qry = query_generator.generate_query(table_object)
+        with self.__conn.cursor() as cursor:
+            cursor.execute(qry)
