@@ -10,7 +10,8 @@ class Index:
     Index object
     """
 
-    def __init__(self, name, table, unique=False, concurrent=False, order=None):
+    def __init__(
+            self, name, table, columns, using=None, unique=False, concurrent=False, use_with=None, tablespace=None, condition=None):
         """
         Constructor
         """
@@ -18,25 +19,104 @@ class Index:
         self.__table = table
         self.__unique = unique
         self.__concurrent = concurrent
-        self.__order = order
+        self.__columns = columns
+        self.__using = using
+        self.__use_with = use_with
+        self.__tablespace = tablespace
+        self.__condition = condition
 
     @property
-    def order(self):
+    def condition(self):
         """
-        Get the order which may be none (unused)
+        Get the condition
 
-        :return:    The order
+        :return:    Condition string
         """
-        return self.__order
+        return self.__condition
 
-    @order.setter
-    def order(self, inorder):
+    @condition.setter
+    def condition(self, condition):
         """
-        Set the order of the index ASC, DESC
+        Set the condition
 
-        :param inorder: The order
+        :param condition:   The condition string
         """
-        self.__order = inorder
+        self.__condition = condition
+
+    @property
+    def tablespace(self):
+        """
+        The tablespace to use
+
+        :return:    The tablespace name
+        """
+        return self.__tablespace
+
+    @tablespace.setter
+    def tablespace(self, tablespace):
+        """
+        Set the tablespace
+
+        :param tablespace:  The tablespace name
+        """
+        self.__tablespace = tablespace
+
+    @property
+    def use_with(self):
+        """
+        Get methods to use with
+
+        :return:    List of  parameters to use with
+        """
+        return self.__use_with
+
+    @use_with.setter
+    def use_with(self, use_with):
+        """
+        Set the use_with options
+        """
+        self.__use_with = use_with
+
+    @use_with.setter
+    def use_with(self, use_with):
+        """
+        Set
+        :param use_with:
+        :return:
+        """
+
+    @property
+    def using(self):
+        """
+        Get the using method
+
+        :return:    The using method
+        """
+        return self.__using
+
+    @using.setter
+    def using(self, using):
+        """
+        Set the method to use
+        """
+        self.__using = using
+
+    @property
+    def columns(self):
+        """
+        Get the relevant columns
+        :return:    Column string list
+        """
+        return self.__columns
+
+    @columns.setter
+    def columns(self, columns):
+        """
+        Set the columns
+
+        :param columns: The columns
+        """
+        self.__columns = columns
 
     @property
     def concurrent(self):

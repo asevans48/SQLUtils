@@ -4,7 +4,7 @@ A table generator
 @author Andrew Evans
 """
 
-from sql.query import query_generator
+from sql.query import create_table_query_generator
 
 
 class TableGenerator:
@@ -17,7 +17,7 @@ class TableGenerator:
         """
         self.__conn = conn
 
-    def close_cursor(self):
+    def close_conn(self):
         """
         Close the cursor
         """
@@ -40,7 +40,7 @@ class TableGenerator:
         :param exc_val:
         :param exc_tb:
         """
-        self.close_cursor()
+        self.close_conn()
 
     def create_table(self, table_object):
         """
@@ -48,6 +48,6 @@ class TableGenerator:
 
         :param table_object: Object containing table information
         """
-        qry = query_generator.generate_query(table_object)
+        qry = create_table_query_generator.generate_query(table_object)
         with self.__conn.cursor() as cursor:
             cursor.execute(qry)
