@@ -5,8 +5,6 @@ Postgres Record iterator
 """
 from psycopg2.extras import RealDictCursor
 
-from sql.record_to_dict import RecordToDict
-
 
 class PGRecordIterator:
     """

@@ -19,8 +19,7 @@ def generate_query(table_object):
         fields = table_object.fields
         if fields:
             if schema:
-                query = "CREATE TABLE {}.{} {}".format(schema, table, str(fields))
+                query = "CREATE TABLE IF NOT EXISTS {}.{} {}".format(schema, table, str(fields))
             else:
-                query = "CREATE TABLE {} {}".format(table, str(fields))
-
+                query = "CREATE TABLE IF NOT EXISTS {} {}".format(table, str(fields))
     return query

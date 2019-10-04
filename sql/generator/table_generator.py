@@ -4,7 +4,7 @@ A table generator
 @author Andrew Evans
 """
 
-from sql import query_generator
+from sql.query import query_generator
 
 
 class TableGenerator:
