@@ -13,10 +13,22 @@ class Index:
     """
 
     def __init__(
-            self, name, table, columns, schema=None, using=None, unique=False, concurrent=False, use_with=None, tablespace=None, condition=None):
+            self,
+            name,
+            table,
+            columns,
+            if_not_exists=False,
+            schema=None,
+            using=None,
+            unique=False,
+            concurrent=False,
+            use_with=None,
+            tablespace=None,
+            condition=None):
         """
         Constructor
         """
+        self.__if_not_exists = if_not_exists
         self.__name = name
         self.__table = table
         self.__schema = schema
@@ -27,6 +39,24 @@ class Index:
         self.__use_with = use_with
         self.__tablespace = tablespace
         self.__condition = condition
+
+    @property
+    def if_not_exists(self):
+        """
+        Get whether the index must exist or not
+
+        :return:    Whether to fail if index exists or not
+        """
+        return self.__if_not_exists
+
+    @if_not_exists.setter
+    def if_not_exists(self, exists):
+        """
+        Set whether to ignore if exists
+
+        :param exists:  ignore if exists
+        """
+        self.__if_not_exists = exists
 
     @property
     def table(self):

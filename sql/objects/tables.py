@@ -16,6 +16,25 @@ class Table:
         self.__schema = None
         self.__table = None
         self.__fields = None
+        self.__if_not_exists = False
+
+    @property
+    def if_not_exists(self):
+        """
+        Get whether to ignore existing
+
+        :return:    Whether the table must exist
+        """
+        return self.__if_not_exists
+
+    @if_not_exists.setter
+    def if_not_exists(self, exists):
+        """
+        Set whether to ignore if table exists
+
+        :param exists:  whether to ignore if table exists
+        """
+        self.__if_not_exists = exists
 
     @property
     def schema(self):

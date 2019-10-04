@@ -16,6 +16,8 @@ def generate_index_query(index):
     if index.unique:
         q = "{} UNIQUE".format(q)
     q = "{} INDEX".format(q)
+    if index.if_not_exists:
+        q = "{} IF NOT EXISTS".format(q)
     if index.concurrent:
         q = "{} CONCURRENTLY".format(q)
     if index.schema:
