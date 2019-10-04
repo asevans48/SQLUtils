@@ -12,19 +12,21 @@ class IndexGenerator:
     Index generator class
     """
 
-    def __init__(self, conn):
+    def __init__(self, conn, close_conn_on_finish=True):
         """
         Constructor
 
         :param conn:    The connection
+        :param close_conn_on_finish: close connetion on exit
         """
         self.__conn = conn
+        self.__do_close_conn = close_conn_on_finish
 
     def close_conn(self):
         """
         Close the connection
         """
-        if self.__conn:
+        if self.__conn and self.__do_close_conn:
             self.__conn.close()
 
     def __enter__(self):

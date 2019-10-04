@@ -9,20 +9,22 @@ from sql.query import create_schema_query_generator
 
 class SchemaGenerator:
 
-    def __init__(self, conn):
+    def __init__(self, conn, close_conn_on_finish=True):
         """
         Constructor
 
         :param conn:    The connection
+        :param close_conn_on_finish:    Whether to close the connection on finish
         """
         self.__conn = conn
+        self.__do_close_conn = close_conn_on_finish
 
 
     def close_conn(self):
         """
         Close the cursor
         """
-        if self.__conn is not None:
+        if self.__conn is not None and self.__do_close_conn:
             self.__conn.close
             self.__conn = None
 

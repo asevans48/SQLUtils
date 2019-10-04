@@ -9,20 +9,22 @@ from sql.query import create_table_query_generator
 
 class TableGenerator:
 
-    def __init__(self, conn):
+    def __init__(self, conn, close_conn_on_finish):
         """
         Constructor
 
         :param conn:    The connection
+        :param close_conn_on_finish:    Close the connection when
         """
         self.__conn = conn
+        self.__do_close_conn = close_conn_on_finish
 
     def close_conn(self):
         """
         Close the cursor
         """
-        if self.__conn is not None:
-            self.__conn.close
+        if self.__conn is not None and self.__do_close_conn:
+            self.__conn.close()
             self.__conn = None
 
     def __enter__(self):
