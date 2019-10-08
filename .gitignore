@@ -3,3 +3,4 @@ venv
 .idea
 build
 test
+*egg*

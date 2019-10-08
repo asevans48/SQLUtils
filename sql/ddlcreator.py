@@ -3,8 +3,8 @@ DDL Creator From JSON file or object.
 
 Usage:
   ddlcreator.py (-f | --file) <layout> <connstring>...
-  naval_fate.py (-h | --help)
-  naval_fate.py --version
+  ddlcreator.py (-h | --help)
+  ddlcreator.py --version
 
 Options:
   -h --help     Show this screen.
@@ -217,11 +217,11 @@ def create_layout(layout, conn):
 
 if __name__ == "__main__":
     arguments = docopt(__doc__, version="DDL Creator 0.1a")
-    layout = arguments.get("layout", None)
-    conn_string = arguments.get("connstring", None)
+    layout = arguments.get("<layout>", None)
+    conn_string = arguments.get("<connstring>", None)
     if layout:
         if conn_string:
-            if arguments.get("-f", None):
+            if arguments.get("--file", False):
                 with open(layout, 'r') as fp:
                     layout = json.load(fp)
             else:

@@ -18,7 +18,7 @@ setup(
     description = ("PostgreSQL utilities"),
     license = "Apache v2",
     keywords = "postgresql sql psycopg2 schema tables",
-    packages=['sql',],
+    packages=['sql', 'sql.generator', 'sql.objects', 'sql.query', 'sql.record'],
     long_description=README,
     classifiers=[
         "Development Status :: 3 - Alpha",
