@@ -34,7 +34,7 @@ def execute_queries(objects, conn):
     for obj in objects:
         q = str(obj)
         with conn.cursor() as cursor:
-            cursor.execute(q)
+            cursor.execute(str(q))
 
 
 def get_indices(layout_dict):
@@ -48,26 +48,26 @@ def get_indices(layout_dict):
     if layout_dict.get("indices", None):
         for idx in layout_dict["indices"]:
             name = idx.get("name", None)
-            table= idx.get("table", None)
+            table = idx.get("table", None)
             columns = idx.get("columns", None)
             if name is not None and table is not None and columns is not None:
                 idx_object = Index(name, table, columns)
                 if idx.get("if_not_exists", False):
                     idx_object.if_not_exists = True
                 if idx.get("schema", None):
-                    idx_object.schema = idx_object["schema"]
+                    idx_object.schema = idx["schema"]
                 if idx.get("using", None):
-                    idx_object.using = idx_object["using"]
+                    idx_object.using = idx["using"]
                 if idx.get("unique", False):
                     idx_object.unique = True
                 if idx.get("concurrent", False):
                     idx_object.concurrent = True
                 if idx.get("use_with", None):
-                    idx_object.use_with = idx_object["use_with"]
+                    idx_object.use_with = idx["use_with"]
                 if idx.get("tablespace", None):
-                    idx_object.tablespace = idx_object["tablespace"]
+                    idx_object.tablespace = idx["tablespace"]
                 if idx.get("condition", None):
-                    idx_object.condition = idx_object["condition"]
+                    idx_object.condition = idx["condition"]
                 rindices.append(idx_object)
             else:
                 msg = "Name, table, and columns must be present for index"
@@ -150,6 +150,7 @@ def get_tables(layout_dict):
             if table.get("fields", None):
                 fields = [get_field(x) for x in table["fields"]]
                 to.fields = fields
+            rtables.append(to)
     return rtables
 
 
@@ -165,13 +166,13 @@ def get_schemas(layout_dict):
             schema_obj = Schema(schema["name"])
             if schema.get("authorization", None):
                 schema_obj.authorization = schema["authorization"]
-            if schema.if_not_exists:
+            if schema.get("if_not_exists", False):
                 schema_obj.if_not_exists = True
             rschemas.append(schema_obj)
     return rschemas
 
 
-def create_layout(self, layout, conn):
+def create_layout(layout, conn):
     """
     Create the database layout from provided DDL
 

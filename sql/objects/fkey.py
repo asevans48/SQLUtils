@@ -26,7 +26,7 @@ class FKIndex:
         """
         return self.__foreign_table_fields
 
-    @property.setter
+    @foreign_table_field.setter
     def foreign_table_field(self, field):
         """
         Set the foreign table field
@@ -44,7 +44,7 @@ class FKIndex:
         """
         return self.__ref_table
 
-    @property.setter
+    @ref_table.setter
     def ref_table(self, table):
         """
         SEt the reference table

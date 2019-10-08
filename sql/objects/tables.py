@@ -6,6 +6,8 @@ A table generator
 
 import psycopg2
 
+from sql.query import create_table_query_generator
+
 
 class Table:
 
@@ -89,3 +91,11 @@ class Table:
         :param fields:  A fields object
         """
         self.__fields = fields
+
+    def __str__(self):
+        """
+        Override to string to return a creation query
+
+        :return:    Query to create the object
+        """
+        return create_table_query_generator.generate_query(self)
