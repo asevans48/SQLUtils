@@ -13,6 +13,7 @@ Options:
 """
 
 import json
+import logging
 
 import psycopg2
 from docopt import docopt
@@ -33,8 +34,13 @@ def execute_queries(objects, conn):
     """
     for obj in objects:
         q = str(obj)
+        msg = "Executing {}".format(q)
+        logging.log(0, msg)
+        print("---------------------\n")
+        print(msg)
         with conn.cursor() as cursor:
             cursor.execute(str(q))
+        print("\n----------------------\n\n")
 
 
 def get_indices(layout_dict):
@@ -108,7 +114,7 @@ def get_field(field_dict):
             ftype = field_dict.get("type", None)
             if ftype:
                 field = TableField(name, ftype)
-                primary_key = field_dict.get("primary_key", None)
+                primary_key = field_dict.get("primary_key", False)
                 not_null = field_dict.get("not_null", True)
                 foreign_key = field_dict.get("foreign_key", None)
                 default_val = field_dict.get("default_val", None)
@@ -118,7 +124,7 @@ def get_field(field_dict):
                 if primary_key:
                     field.primary_key = True
                 if not_null:
-                    field.primary_key = True
+                    field.not_null = True
                 if default_val:
                     field.default_val = default_val
             else:
@@ -221,6 +227,8 @@ if __name__ == "__main__":
     conn_string = arguments.get("<connstring>", None)
     if layout:
         if conn_string:
+            if type(conn_string) is list:
+                conn_string = conn_string[0]
             if arguments.get("--file", False):
                 with open(layout, 'r') as fp:
                     layout = json.load(fp)

@@ -24,7 +24,7 @@ class FKIndex:
 
         :return:    The foreign table fields list
         """
-        return self.__foreign_table_fields
+        return self.__foreign_table_field
 
     @foreign_table_field.setter
     def foreign_table_field(self, field):
@@ -59,8 +59,9 @@ class FKIndex:
         :return:    The useable field value
         """
         if self.__ref_table is not None and self.__foreign_table_field is not None:
-            val = "REFERENCES {}".format(self.ref_table.trim())
-            val = "{}({})".format(val, self.foreign_table_field)
+            val = "REFERENCES {}".format(self.ref_table.strip())
+            field_list = ','.join(self.__foreign_table_field)
+            val = "{}({})".format(val, field_list)
             return val
         else:
             raise ValueError("Reference table and field cannto be null")
